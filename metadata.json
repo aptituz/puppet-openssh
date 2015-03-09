@@ -11,6 +11,14 @@
   "tags": ["ssh", "openssh", "hostkey", "ssh_keygen"],
   "operatingsystem_support": [
     {
+        "operatingsystem": "CentOS",
+        "operatingsystemrelease": [
+            "5",
+            "6",
+            "7"
+        ]
+    },
+    {
         "operatingsystem": "Debian",
         "operatingsystemrelease": [
             "5",
@@ -19,11 +27,16 @@
         ]
     },
     {
-        "operatingsystem": "CentOS",
+        "operatingsystem": "OracleLinux",
         "operatingsystemrelease": [
-            "5",
-            "6",
-            "7"
+            "6.5",
+        ]
+    },
+    {
+        "operatingsystem": "Ubuntu",
+        "operatingsystemrelease": [
+            "12.04",
+            "14.04",
         ]
     }
   ],
