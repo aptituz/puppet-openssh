@@ -4,6 +4,7 @@ describe 'ssh::client' do
     let (:facts) {{
         :osfamily   => 'Debian'
     }}
+	it { should compile.with_all_deps }
 
 	context "basic tests" do
 		it { should contain_class('ssh::client') }
