@@ -387,4 +387,17 @@ AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
 AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
 AcceptEnv XMODIFIERS
 <% end -%>
+
+<% if @options['DenyUsers'] -%>
+AllowGroups <%= @options['DenyUsers'] %>
+<% end -%>
+<% if @options['AllowUsers'] -%>
+AllowGroups <%= @options['AllowUsers'] %>
+<% end -%>
+<% if @options['DenyGroups'] -%>
+AllowGroups <%= @options['DenyGroups'] %>
+<% end -%>
+<% if @options['AllowGroups'] -%>
+AllowGroups <%= @options['AllowGroups'] %>
+<% end -%>
 <% end -%>
