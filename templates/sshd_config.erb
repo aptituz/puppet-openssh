@@ -389,13 +389,13 @@ AcceptEnv XMODIFIERS
 <% end -%>
 
 <% if @options['DenyUsers'] -%>
-AllowGroups <%= @options['DenyUsers'] %>
+DenyUsers <%= @options['DenyUsers'] %>
 <% end -%>
 <% if @options['AllowUsers'] -%>
-AllowGroups <%= @options['AllowUsers'] %>
+AllowUsers <%= @options['AllowUsers'] %>
 <% end -%>
 <% if @options['DenyGroups'] -%>
-AllowGroups <%= @options['DenyGroups'] %>
+DenyGroups <%= @options['DenyGroups'] %>
 <% end -%>
 <% if @options['AllowGroups'] -%>
 AllowGroups <%= @options['AllowGroups'] %>
