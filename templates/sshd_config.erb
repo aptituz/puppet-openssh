@@ -11,7 +11,13 @@
 
 
 <% if @options['Port'] -%>
+<% if @options['Port'].respond_to?('each') -%>
+<% @options['Port'].each do |port| -%>
+Port <%= port %>
+<% end -%>
+<% else -%>
 Port <%= @options['Port'] %>
+<% end -%>
 <% else -%>
 #Port 22
 <% end -%>
