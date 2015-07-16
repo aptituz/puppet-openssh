@@ -119,6 +119,11 @@ end
 def get_authorized_keys(fullpath, as_hash)
     known_hosts = "#{fullpath}/authorized_keys"
 
+    # short-circuit requests for authorized_keys before first keys have been created
+    unless File.exists?(known_hosts)
+      return (as_hash == true) ? {} : ""
+    end
+
     debug "as_hash: xxx"
     unless as_hash == true
         return File.open(known_hosts).read
