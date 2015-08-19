@@ -28,12 +28,12 @@ AddressFamily <%= @options['AddressFamily'] %>
 <% end -%>
 #ListenAddress 0.0.0.0
 #ListenAddress ::
-<% if listen_address.respond_to?('each') -%>
-<% listen_address.each do |listener| -%>
+<% if @listen_address.respond_to?('each') -%>
+<% @listen_address.each do |listener| -%>
 ListenAddress <%= listener %>
 <% end -%>
 <% else -%>
-ListenAddress <%= listen_address %>
+ListenAddress <%= @listen_address %>
 <% end -%>
 
 # The default requires explicit activation of protocol 1 starting
@@ -94,7 +94,7 @@ LoginGraceTime <%= @options['LoginGraceTime'] %>
 <% else -%>
 #LoginGraceTime 2m
 <% end -%>
-PermitRootLogin <%= permit_root_login %>
+PermitRootLogin <%= @permit_root_login %>
 <% if @options['StrictModes'] -%>
 StrictModes <%= @options['StrictModes'] %>
 <% else -%>
