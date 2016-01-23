@@ -3,6 +3,7 @@ notifications:
   email:
     - patrick.schoenfeld@googlemail.com
 env:
+bundler_args: --without system_tests
 script: "bundle exec rake validate && bundle exec rake spec && bundle exec rake lint"
 matrix:
   fast_finish: true

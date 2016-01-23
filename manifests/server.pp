@@ -72,11 +72,11 @@ class ssh::server (
 
     if $manage_config {
         file { '/etc/ssh':
-            ensure  => directory,
-            owner   => 'root',
-            group   => 'root',
-            mode    => '0755',
-            before  => Concat['/etc/ssh/sshd_config']
+            ensure => directory,
+            owner  => 'root',
+            group  => 'root',
+            mode   => '0755',
+            before => Concat['/etc/ssh/sshd_config']
         }
 
         concat::fragment { 'sshd_config_base':
