@@ -17,7 +17,7 @@ RSpec.configure do |c|
     puppet_module_install(:source => module_root, :module_name => 'ssh')
     hosts.each do |host|
       on host, puppet('module','install','puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
-
+      on host, puppet('module','install','puppetlabs-concat', '--version', '1.2.0'), { :acceptable_exit_codes => [0,1] }
 #      binding.pry
     end
   end

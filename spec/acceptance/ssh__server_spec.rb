@@ -16,6 +16,9 @@ describe 'ssh::server' do
 
   describe file('/etc/ssh/sshd_config') do
     it { should be_file}
+    it { should contain '# MANAGED BY PUPPET' }
+    it { should contain 'ListenAddress 0.0.0.0' }
+    it { should contain 'PermitRootLogin no' }
   end
 
   describe service('ssh') do
