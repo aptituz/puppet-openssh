@@ -3,7 +3,7 @@ require 'pry'
 
 hosts.each do |host|
   # Install Puppet
-  on host, install_puppet
+  install_package(host, 'puppet')
 end
 
 RSpec.configure do |c|
