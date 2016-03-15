@@ -3,7 +3,7 @@
 # Manage SSH on a system
 #
 # == Parameters:
-# 
+#
 # [*ensure*]
 #    What state to ensure for the package. Accepts the same values
 #    as the parameter of the same name for a package type.
@@ -43,7 +43,7 @@
 #    Default: 0.0.0.0
 #
 # == Author:
-# 
+#
 #    Patrick Schoenfeld <patrick.schoenfeld@credativ.de>
 #
 class ssh::server (
@@ -80,7 +80,7 @@ class ssh::server (
         }
 
         concat::fragment { 'sshd_config_base':
-            content => template('ssh/sshd_config.erb'),
+            content => template($config_template),
             target  => '/etc/ssh/sshd_config',
             order   => '01',
         }
