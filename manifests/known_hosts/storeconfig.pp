@@ -6,7 +6,7 @@ class ssh::known_hosts::storeconfig (
     $hostaliases        = undef,
 ) {
     if ! $hostaliases {
-        warning("ssh::known_hosts::storeconfig: no hostaliases specified. using defaults (fqdn, ipaddress) for now, but this will soon be obsoleted")
+        warning('ssh::known_hosts::storeconfig: no hostaliases specified. using defaults (fqdn, ipaddress) for now, but this will soon be obsoleted')
         $used_hostaliases = [$::fqdn, $::ipaddress]
     } else {
         $used_hostaliases = $hostaliases
