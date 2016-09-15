@@ -3,7 +3,8 @@
 # Manges a global known_hosts file
 class ssh::known_hosts (
     $manage,
-    $manage_hostkey
+    $manage_hostkey,
+    $hostaliases = undef,
     ) {
     if $manage {
       if $manage_hostkey {
@@ -18,8 +19,9 @@ class ssh::known_hosts (
       } else {
           # storeconfig based implementation is in another class, because
           # otherwise the server is complaining loud if storeconfig is not enabled
-          class { 'ssh::known_hosts::storeconfig': }
+          class { 'ssh::known_hosts::storeconfig':
+            hostaliases => $hostaliases,
+          }
       }
     }
-    
 }

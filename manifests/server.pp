@@ -113,5 +113,6 @@ class ssh::server (
     class { 'ssh::known_hosts':
         manage         => $manage_known_hosts,
         manage_hostkey => $manage_hostkey,
+        hostaliases    => $hostaliases,
     }
 }
