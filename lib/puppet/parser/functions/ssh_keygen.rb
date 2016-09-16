@@ -74,10 +74,13 @@ def add_key_to_known_hosts(fullpath, name, aliases, keyfile)
         raise Puppet::ParseError, "unable to determine fqdn: please check system configuration"
     end
 
+
     hosts = "#{hostname},#{fqdn},#{ipaddress}"
     unless aliases.nil? or aliases == :undef
-        hosts << "," << aliases
+
+        hosts = hosts + "," + aliases.join(",")
     end
+            #raise "we are here"
 
     key             = get_pubkey(keyfile, false)
     search_string   = "^.* " + Regexp.escape(key) + "$"
@@ -140,7 +143,7 @@ def get_authorized_keys(fullpath, as_hash)
             debug "skipping invalid authorized_key line: '#{line}'"
         end
 
-        result[comment] = { 
+        result[comment] = {
                 'type'      => type,
                 'key'       => key,
                 'name'   => comment
@@ -168,7 +171,7 @@ def get_pubkey(keyfile, only_keypart = false)
             pubkey.scan(/^.* (.*) .*$/)[0][0]
         else
             return pubkey
-        end 
+        end
     rescue => e
         raise Puppet::ParseError, "ssh_keygen: unable to read public key: #{key}"
     end
@@ -184,6 +187,7 @@ module Puppet::Parser::Functions
     config = args.first
 
     config = {
+      'basedir'                 => '/etc/puppet',
       'dir'                     => 'ssh',
       'type'                    => 'rsa',
       'hostkey'                 => false,
@@ -216,7 +220,7 @@ module Puppet::Parser::Functions
 
 
     # construct fullpath from puppet base and dir argument
-    fullpath = "/etc/puppet/#{config['dir']}"
+    fullpath = "#{config['basedir']}/#{config['dir']}"
 
     init(fullpath)
     create_key_if_not_exists(
@@ -228,7 +232,7 @@ module Puppet::Parser::Functions
         config['hostaliases'],
         config['authkey'],
         config['request']
-    ) 
+    )
 
     # Check what mode of action is requested
     begin

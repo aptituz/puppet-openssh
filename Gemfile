@@ -20,6 +20,7 @@ group :unit_tests, :development do
   gem 'rspec'
   gem 'rspec-puppet'
   gem 'puppetlabs_spec_helper', '>= 0.1.0'
+  gem 'sshkey'
 end
 
 group :system_tests do
