@@ -11,6 +11,8 @@ module Puppet::Parser::Functions
     options         = args[3] || {}
     valid_options   = {
         'validity'           => ['-V', '%s'],
+        'serial_number'      => ['-z', '%s'],
+        'cert_options'       => proc { |options| options.collect { |opt| ['-O', opt] } },
         'host_certificate'   => '-h',
         'principals'         => proc { |options| [ "-n",  options.join(",") ] },
     }

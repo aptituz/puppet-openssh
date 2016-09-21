@@ -31,8 +31,6 @@ def certificate_data(certificate_data)
     output.split("\n").inject do |memo,line|
         line.strip!
 
-        #puts line
-
         # Type: ssh-rsa-cert-v01@openssh.com user certificate
         if match = line.match(/([\w ]+:) (.*)$/)
             current_field = match[1].downcase.gsub(' ', '_')
@@ -58,5 +56,7 @@ def certificate_data(certificate_data)
     if result.has_key?(:valid) and match = result[:valid].match(/from (.*) to (.*)$/)
         result[:valid] = { :from => Date.parse(match[1]), :to => Date.parse(match[2]) }
     end
+
+    result[:serial] = result[:serial].to_i if result.has_key?(:serial)
     result
 end

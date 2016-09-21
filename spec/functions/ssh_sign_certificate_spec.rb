@@ -59,8 +59,10 @@ describe 'ssh_sign_certificate' do
         let (:public_key)   { SSHKey.generate().ssh_public_key }
         let (:principals)   { ['foo', 'baz'] }
         let (:options)      {{
-            'principals' => principals,
-            'validity'   => '+7d'
+            'principals'    => principals,
+            'validity'      => '+7d',
+            'serial_number' => '123',
+            'cert_options'  => ['clear','permit-port-forwarding'],
         }}
         let (:params)       { [ @ca_key_file, 'test1', public_key, options ] }
 
@@ -79,6 +81,13 @@ describe 'ssh_sign_certificate' do
             it "being valid for 7 days" do
                 validity = certificate_data(key)[:valid]
                 expect(validity[:to] - validity[:from]).to eq(7)
+            end
+
+            it "has the expected serial number" do
+                expect(certificate_data(key)[:serial]).to eq(123)
+            end
+            it "has the expected options" do
+                expect(certificate_data(key)[:extensions]).to eq(['permit-port-forwarding'])
             end
         end
     end
