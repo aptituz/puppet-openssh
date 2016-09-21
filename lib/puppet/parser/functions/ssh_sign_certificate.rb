@@ -43,6 +43,11 @@ module Puppet::Parser::Functions
             end
 
             keygen_command = [ 'ssh-keygen', '-q', '-s', signkey_file, '-I', certificate_id ]
+
+            if options['host_certificate']
+                keygen_command << '-h'
+            end
+
             keygen_command << public_key_temp_file
 
             IO.popen(keygen_command) do |io|#, :err=>[:child, :out]) do |io|
