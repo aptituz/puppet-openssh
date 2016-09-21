@@ -47,6 +47,13 @@ describe 'ssh_sign_certificate' do
             end
         end
     end
+    context "with invalid options" do
+        let (:options) { { 'invalid' => nil } }
+        let (:params)  { [ @ca_key_file, 'test1', public_key, options ] }
+
+        it { is_expected.to run.with_params(@ca_key_file, 'test1', 'public_key', options).and_raise_error(ArgumentError) }
+
+    end
 
     context "with some options" do
         let (:public_key)   { SSHKey.generate().ssh_public_key }

@@ -9,6 +9,28 @@ module Puppet::Parser::Functions
     certificate_id  = args[1]
     public_key      = args[2]
     options         = args[3] || {}
+    valid_options   = {
+        'validity'           => ['-V', '%s'],
+        'host_certificate'   => '-h',
+        'principals'         => proc { |options| [ "-n",  options.join(",") ] },
+    }
+
+    keygen_extra_args = []
+    options.each do |name, values|
+        if valid_options.has_key?(name)
+            argspec = valid_options[name]
+        else
+            raise ArgumentError, ("ssh_sign_certificate(): unknown option `#{name}'")
+        end
+
+        if argspec.kind_of?(Array)
+            keygen_extra_args << argspec[0] << sprintf(argspec[1], values)
+        elsif argspec.kind_of?(String)
+            keygen_extra_args << argspec
+        elsif argspec.kind_of?(Proc)
+            keygen_extra_args << argspec.call(values)
+        end
+    end
 
     unless File.exists?(signkey_file)
         raise ArgumentError, ("ssh_sign_certificate(): first argument (#{signkey_file}) needs to specify path to an existing signing key")
@@ -42,15 +64,12 @@ module Puppet::Parser::Functions
                 file.write(public_key)
             end
 
-            keygen_command = [ 'ssh-keygen', '-q', '-s', signkey_file, '-I', certificate_id ]
+            keygen_command = [ 'ssh-keygen', '-q', '-s', signkey_file, '-I', certificate_id, keygen_extra_args, public_key_temp_file]
+            keygen_command.flatten!
 
-            if options['host_certificate']
-                keygen_command << '-h'
-            end
 
-            keygen_command << public_key_temp_file
-
-            IO.popen(keygen_command) do |io|#, :err=>[:child, :out]) do |io|
+            debug "Executing #{keygen_command}"
+            IO.popen(keygen_command.flatten) do |io|#, :err=>[:child, :out]) do |io|
                 #FIXME: Implement error handling
                 io.read
             end
