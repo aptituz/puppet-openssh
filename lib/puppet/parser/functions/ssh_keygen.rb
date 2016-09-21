@@ -54,7 +54,7 @@ def get_authorized_keys(fullpath, as_hash = false)
 end
 
 
-class SSHKey
+class SSHKeyGen
     # stores the name of the ssh key
     attr_reader :name
 
@@ -231,7 +231,7 @@ module Puppet::Parser::Functions
         end
     end
 
-    keypair = SSHKey.new(config['name'], config['type'], config['comment'], {
+    keypair = SSHKeyGen.new(config['name'], config['type'], config['comment'], {
         :cache_dir      => fullpath,
         :facts          => facts,
         :hostaliases    => config['hostaliases'],

@@ -129,7 +129,7 @@ describe 'ssh_keygen' do
 
         context "when requesting public key" do
             let (:params)       { base_params.merge( { 'request' => 'public' } ) }
-            let (:key1)          { subject.call([params]) }
+            let (:key1)         { subject.call([params]) }
             let (:key_object)   { SSHKey.new(key) }
 
             it "returns a valid ssh public key" do
