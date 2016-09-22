@@ -71,7 +71,7 @@ module Puppet::Parser::Functions
 
 
             debug "Executing #{keygen_command}"
-            IO.popen(keygen_command.flatten) do |io|#, :err=>[:child, :out]) do |io|
+            IO.popen(keygen_command) do |io|#, :err=>[:child, :out]) do |io|
                 #FIXME: Implement error handling
                 io.read
             end
