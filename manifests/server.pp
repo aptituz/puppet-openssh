@@ -100,7 +100,7 @@ class ssh::server (
         hasrestart => true,
         hasstatus  => true,
         require    => [
-            File['/etc/ssh/sshd_config'],
+            Concat['/etc/ssh/sshd_config'],
             Package['openssh-server']
         ],
     }
