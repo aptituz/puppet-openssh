@@ -2,7 +2,7 @@
 require 'fileutils'
 
 module Puppet::Parser::Functions
-  newfunction(:ssh_sign_certificate, :type => :rvalue, :doc <<-DOC
+  newfunction(:ssh_sign_certificate, :type => :rvalue, doc: <<-DOC
     This function allows generation and puppetmaster-side caching of SSH certificates,
     for user certificates (default) and host certificates.
 
