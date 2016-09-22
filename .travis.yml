@@ -8,8 +8,6 @@ script: "bundle exec rake validate && bundle exec rake spec && bundle exec rake 
 matrix:
   fast_finish: true
   include:
-  - rvm: 1.9.3
-    env: PUPPET_VERSION="~> 3.7.2"
   - rvm: 2.1.5
     env: PUPPET_VERSION="~> 3.7.2"
   - rvm: 2.1.5
