@@ -1,6 +1,6 @@
 define ssh::certificate (
     $ensure = 'present',
-    $certicate_id,
+    $certificate_id,
     $public_key,
     $target,
     $host_certificate = false,
