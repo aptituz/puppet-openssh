@@ -5,7 +5,7 @@ define ssh::certificate (
     $target,
     $host_certificate = false,
     $ca_key_file = '/etc/puppet/id_ca',
-    $options
+    $options = {}
 ) {
     validate_string($certicate_id)
     validate_bool($host_certificate)
@@ -16,7 +16,7 @@ define ssh::certificate (
 
     file { $target:
         ensure  => $ensure,
-        content => ssh_sign_certificate($ca_key_file, $certicate_id, $public_key, $real_Aoptions),
+        content => ssh_sign_certificate($ca_key_file, $certicate_id, $public_key, $real_options),
         mode    => '0644',
     }
 }
