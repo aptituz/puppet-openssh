@@ -95,12 +95,13 @@ module Puppet::Parser::Functions
 
             keygen_command = [ 'ssh-keygen', '-q', '-s', signkey_file, '-I', certificate_id, keygen_extra_args, public_key_temp_file]
             keygen_command.flatten!
+            cmdline = keygen_command.join(" ")
 
 
-            debug "Executing #{keygen_command}"
-            IO.popen(keygen_command.join(" ")) do |io|#, :err=>[:child, :out]) do |io|
-                #FIXME: Implement error handling
-                io.read
+            debug "Executing #{cmdline}"
+            %x[#{cmdline}]
+            if $?.exitstatus != 0
+                raise Puppet::ParseError, "calling '#{cmdline}' resulted in error: #{output}"
             end
 
             FileUtils.cp(certificate_temp_file, cache_file)
