@@ -11,6 +11,7 @@ class ssh::params {
     $listen_address     = '0.0.0.0'
     $hostkey_name       = $::fqdn
     $hostaliases        = undef
+    $ca_key             = undef
 
     $options            = {}
 

@@ -42,24 +42,32 @@
 #    Define the address the sshd should listen on.
 #    Default: 0.0.0.0
 #
+# [*ca_key*]
+#    Specify path to a ca key on the puppetmaster. If set a host certificate
+#    will be generated signed by the given ca. Note that this ca key
+#    has to exist in advance.
+#
+#
 # == Author:
 #
 #    Patrick Schoenfeld <patrick.schoenfeld@credativ.de>
 #
 class ssh::server (
-    $ensure             = $ssh::params::ensure,
-    $ensure_running     = $ssh::params::ensure_running,
-    $ensure_enabled     = $ssh::params::ensure_enabled,
-    $manage_config      = $ssh::params::manage_config,
-    $manage_known_hosts = $ssh::params::manage_known_hosts,
-    $manage_hostkey     = $ssh::params::manage_hostkey,
-    $config_template    = $ssh::params::config_template,
-    $hostkey_name       = $ssh::params::hostkey_name,
-    $hostaliases        = $ssh::params::hostaliases,
-    $service_name       = $ssh::params::service_name,
-    $permit_root_login  = $ssh::params::permit_root_login,
-    $listen_address     = $ssh::params::listen_address,
-    $options            = $ssh::params::options,
+    $ensure                     = $ssh::params::ensure,
+    $ensure_running             = $ssh::params::ensure_running,
+    $ensure_enabled             = $ssh::params::ensure_enabled,
+    $manage_config              = $ssh::params::manage_config,
+    $manage_known_hosts         = $ssh::params::manage_known_hosts,
+    $manage_hostkey             = $ssh::params::manage_hostkey,
+    $config_template            = $ssh::params::config_template,
+    $hostkey_name               = $ssh::params::hostkey_name,
+    $hostaliases                = $ssh::params::hostaliases,
+    $service_name               = $ssh::params::service_name,
+    $permit_root_login          = $ssh::params::permit_root_login,
+    $listen_address             = $ssh::params::listen_address,
+    $options                    = $ssh::params::options,
+    $ca_key                     = $ssh::params::ssh_key,
+    $trusted_cert_authorities   = $ssh::params::trusted_cert_authorities,
     ) inherits ssh::params {
 
     validate_re($permit_root_login,
@@ -109,10 +117,12 @@ class ssh::server (
         manage_hostkey => $manage_hostkey,
         hostkey_name   => $hostkey_name,
         hostaliases    => $hostaliases,
+        ca_key         => $ca_key,
     } ~>
     class { 'ssh::known_hosts':
-        manage         => $manage_known_hosts,
-        manage_hostkey => $manage_hostkey,
-        hostaliases    => $hostaliases,
+        manage                      => $manage_known_hosts,
+        manage_hostkey              => $manage_hostkey,
+        hostaliases                 => $hostaliases,
+        trusted_cert_authorities    => $trusted_cert_authorities
     }
 }

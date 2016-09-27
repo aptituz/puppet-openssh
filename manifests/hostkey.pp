@@ -2,6 +2,7 @@
 class ssh::hostkey (
     $manage_hostkey,
     $hostkey_name,
+    $ca_key = undef,
     $hostaliases = undef,
 ) {
 
@@ -23,11 +24,23 @@ class ssh::hostkey (
             'dir'     => 'ssh/hostkeys',
             'public'  => true,
         })
-        ssh::certificate { '/etc/ssh/ssh_host_rsa_key-cert.pub':
-            ensure          => 'present',
-            target          => '/etc/ssh/ssh_host_rsa_key-cert.pub',
-            certificate_id  => $::fqdn,
-            public_key      => $rsa_pub
+
+        if $ca_key {
+            ssh::certificate { '/etc/ssh/ssh_host_rsa_key-cert.pub':
+                ensure          => 'present',
+                certificate_id  => $::fqdn,
+                public_key      => $rsa_pub,
+                ca_key_file     => $ca_key,
+            }
+
+            # Configures a host certificate for the sshd on this host
+            # Should probably be moved to the ssh module and generalized
+            ssh::server::custom_config { 'HostCertificate':
+                order   => 02,
+                content => "
+# host certificate configured via ssh::hostkey
+HostCertificate /etc/ssh/ssh_host_rsa_key-cert"
+            }
         }
 
         file { '/etc/ssh/ssh_host_rsa_key':
