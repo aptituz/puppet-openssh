@@ -76,12 +76,13 @@ module Puppet::Parser::Functions
     end
 
     vardir      = Puppet[:vardir]
+    fqdn        = lookupvar('fqdn')
+
     # used for caching generated certificates
-    cache_dir   = File.join(vardir, 'ssh', 'certificates')
+    cache_dir   = File.join(vardir, 'ssh', 'certificates', fqdn)
     FileUtils.mkdir_p(cache_dir)
 
-    fqdn        = lookupvar('fqdn')
-    cache_file  = File.join(cache_dir, fqdn)
+    cache_file  = File.join(cache_dir, fqdn + "_" + certificate_id)
 
     unless File.exists?(cache_file)
         Dir.mktmpdir("puppet-") do |tmpdir|
