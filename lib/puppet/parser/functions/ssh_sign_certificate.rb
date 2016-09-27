@@ -56,7 +56,7 @@ module Puppet::Parser::Functions
 
         if argspec.kind_of?(Array)
             keygen_extra_args << argspec[0] << sprintf(argspec[1], values)
-        elsif argspec.kind_of?(String)
+        elsif argspec.kind_of?(String) and options[name]
             keygen_extra_args << argspec
         elsif argspec.kind_of?(Proc)
             keygen_extra_args << argspec.call(values)

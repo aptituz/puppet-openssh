@@ -91,4 +91,14 @@ describe 'ssh_sign_certificate' do
             end
         end
     end
+
+    context "with false for a boolean param" do
+        let (:public_key)   { SSHKey.generate().ssh_public_key }
+        let (:params)       { [ @ca_key_file, 'test1', public_key, { 'host_certificate' => false} ] }
+        let (:key)          { subject.call(params) }
+
+        it "returns a user  is a user certificate" do
+            expect(certificate_data(key)[:type]).to match(/user certificate/)
+        end
+    end
 end
