@@ -100,7 +100,7 @@ module Puppet::Parser::Functions
 
 
             debug "Executing #{cmdline}"
-            %x[#{cmdline}]
+            output = %x[#{cmdline} 2>&1]
             if $?.exitstatus != 0
                 raise Puppet::ParseError, "calling '#{cmdline}' resulted in error: #{output}"
             end
