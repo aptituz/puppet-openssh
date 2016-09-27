@@ -23,6 +23,12 @@ class ssh::hostkey (
             'dir'     => 'ssh/hostkeys',
             'public'  => true,
         })
+        ssh::certificate { '/etc/ssh/ssh_host_rsa_key-cert.pub':
+            ensure          => 'present',
+            target          => '/etc/ssh/ssh_host_rsa_key-cert.pub',
+            certificate_id  => $::fqdn,
+            public_key      => $rsa_pub
+        }
 
         file { '/etc/ssh/ssh_host_rsa_key':
             owner   => 'root',
