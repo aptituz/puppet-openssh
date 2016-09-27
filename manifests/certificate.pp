@@ -2,6 +2,7 @@ define ssh::certificate (
     $ensure = 'present',
     $certificate_id,
     $public_key,
+    $type = 'ssh-rsa',
     $target = $name,
     $host_certificate = false,
     $ca_key_file = '/etc/puppet/id_ca',
@@ -19,7 +20,7 @@ define ssh::certificate (
 
     file { $target:
         ensure  => $ensure,
-        content => ssh_sign_certificate($ca_key_file, $certificate_id, $public_key, $real_options),
+        content => ssh_sign_certificate($ca_key_file, $certificate_id, "$type $public_key", $real_options),
         mode    => '0644',
     }
 }
