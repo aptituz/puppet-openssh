@@ -38,12 +38,18 @@ module Puppet::Parser::Functions
     certificate_id  = args[1]
     public_key      = args[2]
     options         = args[3] || {}
+    fqdn            = lookupvar('fqdn')
+    vardir          = Puppet[:vardir]
+    cache_dir       = File.join(vardir, 'ssh', 'certificates', fqdn)
+
+    non_keygen_args = %w{ cache_dir }
     valid_options   = {
         'validity'           => ['-V', '%s'],
         'serial_number'      => ['-z', '%s'],
         'host_certificate'   => '-h',
         'principals'         => proc { |options| [ "-n",  options.join(",") ] },
         'cert_options'       => proc { |options| options.collect { |opt| ['-O', opt] } },
+        'cache_dir'          => proc { |option| cache_dir = option }
     }
 
     keygen_extra_args = []
@@ -54,40 +60,46 @@ module Puppet::Parser::Functions
             raise ArgumentError, ("ssh_sign_certificate(): unknown option `#{name}'")
         end
 
-        if argspec.kind_of?(Array)
-            keygen_extra_args << argspec[0] << sprintf(argspec[1], values)
-        elsif argspec.kind_of?(String) and options[name]
-            keygen_extra_args << argspec
-        elsif argspec.kind_of?(Proc)
-            keygen_extra_args << argspec.call(values)
+        extra_args = case argspec
+                     when Array
+                        argspec[0] << sprintf(argspec[1], values)
+                     when String
+                        options[name] ? argspec : nil
+                     when Proc
+                        argspec.call(values)
+                     end
+
+        unless non_keygen_args.include?(name) and not extra_args.nil?
+            keygen_extra_args << extra_args
         end
     end
 
-    unless File.exists?(signkey_file)
-        raise ArgumentError, ("ssh_sign_certificate(): first argument (#{signkey_file}) needs to specify path to an existing signing key")
+    unless File.exists?(signkey_file) and File.owned?(signkey_file)
+        raise ArgumentError, ("ssh_sign_certificate(): first argument (#{signkey_file}) must point to an existing key owned by us (#{Puppet[:user]})")
     end
 
-    unless certificate_id.kind_of?(String)
-        raise ArgumentError, ("ssh_sign_certificate(): second argument needs to be the certificate id")
+    unless certificate_id.kind_of?(String) and certificate_id
+        raise ArgumentError, ("ssh_sign_certificate(): second argument (#{certificate_id}) needs to be a certificate id")
     end
 
-    unless public_key.kind_of?(String)
-        raise ArgumentError, ("ssh_sign_certificate(): third argument needs to be a string containing public key")
+    unless public_key.kind_of?(String) and public_key.start_with?('ssh-')
+        raise ArgumentError, ("ssh_sign_certificate(): expected public key as string argument, got: #{public_key}")
     end
 
-    vardir      = Puppet[:vardir]
-    fqdn        = lookupvar('fqdn')
 
     # used for caching generated certificates
-    cache_dir   = File.join(vardir, 'ssh', 'certificates', fqdn)
-    FileUtils.mkdir_p(cache_dir)
+    FileUtils.mkdir_p(cache_dir) unless File.directory?(cache_dir)
 
     cache_file  = File.join(cache_dir, fqdn + "_" + certificate_id)
+    debug "ssh_sign_certificate(): generated certificate will be cached in #{cache_file}"
 
     unless File.exists?(cache_file)
         Dir.mktmpdir("puppet-") do |tmpdir|
+            tmpdir = '/tmp'
             # need to write to temporary file, so that ssh-keygen can access it
             public_key_temp_file    = File.join(tmpdir, "result.pub")
+            # keep in mind that the directory of the files must have the same basedirectory
+            # as ssh-keygen does not allow specifying the path of the created certificate
             certificate_temp_file   = File.join(tmpdir, "result-cert.pub")
 
             File.open(public_key_temp_file, "w") do |file|

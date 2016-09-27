@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 require 'sshkey'
+require 'fileutils'
+
 
 describe 'ssh_sign_certificate' do
     before :each do
@@ -14,15 +16,47 @@ describe 'ssh_sign_certificate' do
     end
 
     let (:tempdir) { @tempdir }
+    let (:cache_dir)    { File.join(@tempdir, 'certificates') }
+
+
+    context "test for expected exceptions" do
+        it "raises expected error with no arguments" do
+            should run.with_params().and_raise_error(ArgumentError, /wrong number of arguments/)
+        end
+        it "raises expected error with non-existing key" do
+            should run.with_params('/tmp/asdjadj', '', '').and_raise_error(ArgumentError, /owned by us/)
+        end
+        it "raises expected error with invalid certicate id" do
+            should run.with_params(@ca_key_file, nil, '').and_raise_error(ArgumentError, /needs to be a certificate id/)
+        end
+        it "raises expected error with invalid public key" do
+            should run.with_params(@ca_key_file, "foo", '').and_raise_error(ArgumentError, /expected public key as string argument/)
+        end
+    end
 
     context "with minimum required params" do
         let (:public_key)   { SSHKey.generate().ssh_public_key }
-        let (:params)       { [ @ca_key_file, 'test1', public_key ] }
+        let (:params)       { [ @ca_key_file, 'test1', public_key, { 'cache_dir' => cache_dir} ] }
 
         it { is_expected.to run.with_params(@ca_key_file, 'test1', public_key).and_return(/[a-f0-9]+/) }
         it "returns a certificate" do
             key = subject.call(params)
             expect(certificate_data(key)[:type]).to match(/ssh-(.*)-cert/)
+        end
+        it "creates certificate directory" do
+            subject.call(params)
+            expect(Dir).to exist(cache_dir)#).to eq(true)
+        end
+    end
+
+    context "with existing directory" do
+        let (:public_key)   { SSHKey.generate().ssh_public_key }
+        let (:params)       { [ @ca_key_file, 'test1', public_key, { 'cache_dir' => cache_dir} ] }
+
+        it "works without complaining" do
+            FileUtils::mkdir_p(cache_dir)
+            expect(Dir).to exist(cache_dir)
+            is_expected.to run.with_params(@ca_key_file, 'test1', public_key).and_return(/[a-f0-9]+/)
         end
     end
 
@@ -101,4 +135,5 @@ describe 'ssh_sign_certificate' do
             expect(certificate_data(key)[:type]).to match(/user certificate/)
         end
     end
+
 end
