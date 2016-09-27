@@ -2,7 +2,7 @@
 require 'fileutils'
 
 module Puppet::Parser::Functions
-  newfunction(:ssh_sign_certificate, :type => :rvalue, doc: <<-DOC
+  newfunction(:ssh_sign_certificate, :type => :rvalue, :doc => <<-DOC
     This function allows generation and puppetmaster-side caching of SSH certificates,
     for user certificates (default) and host certificates.
 
@@ -98,7 +98,7 @@ module Puppet::Parser::Functions
 
 
             debug "Executing #{keygen_command}"
-            IO.popen(keygen_command) do |io|#, :err=>[:child, :out]) do |io|
+            IO.popen(keygen_command.join(" ")) do |io|#, :err=>[:child, :out]) do |io|
                 #FIXME: Implement error handling
                 io.read
             end
