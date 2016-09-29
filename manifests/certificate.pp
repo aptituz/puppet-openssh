@@ -4,7 +4,7 @@ define ssh::certificate (
     $target = $name,
     $host_certificate = false,
     $ca_key_file = '/etc/puppet/id_ca',
-    $options = {}
+    $options = {},
     $ensure = 'present',
 ) {
     validate_string($certificate_id)
