@@ -1,13 +1,15 @@
 ### File managed with puppet ###
 ## Module: '<%= scope.to_hash['module_name'] %>'
 ## Template source: 'MODULES<%= template_source.gsub(Regexp.new("^#{Puppet::Node::Environment.current[:modulepath].gsub(':','|')}"),"") %>'
-<% trusted_cert_authorities.sort_by { |name| name }.each  do |name, key| -%>
-<% if key.is_a?(String) -%>
+<% if @trusted_cert_authorities.respond_to?(:sort_by) -%>
+<%   @trusted_cert_authorities.sort_by { |name| name }.each  do |name, key| -%>
+<%     if key.is_a?(String) -%>
 # key for <%= name %>
 @cert-authority * ssh-rsa <%= key %>
-<% elsif key.is_a?(Hash) -%>
+<%     elsif key.is_a?(Hash) -%>
 # key for <%= name %>
 @cert-authority <%= key['hostaliases'] || '*' %> <%= key['type'] || 'ssh-rsa' %> <%= key['content'] %>
-<% end -%>
+<%     end -%>
+<%   end -%>
 <% end -%>
 <%= @generated_known_hosts %>
