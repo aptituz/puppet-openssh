@@ -1,10 +1,10 @@
 fixtures:
   forge_modules:
-    concat: 
+    concat:
       repo: 'puppetlabs/concat'
       ref: '1.2.5'
     stdlib:
       repo: 'puppetlabs/stdlib'
-      ref: '4.6.0'
+      ref: '4.11.0'
   symlinks:
     ssh: "#{source_dir}"
