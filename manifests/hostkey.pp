@@ -27,10 +27,14 @@ class ssh::hostkey (
 
         if $ca_key {
             ssh::certificate { '/etc/ssh/ssh_host_rsa_key-cert.pub':
-                ensure          => 'present',
-                certificate_id  => $::fqdn,
-                public_key      => $rsa_pub,
-                ca_key_file     => $ca_key,
+                ensure              => 'present',
+                certificate_id      => $::fqdn,
+                public_key          => $rsa_pub,
+                ca_key_file         => $ca_key,
+                host_certificate    => true,
+                options             => {
+                    'principals' => concat($hostaliases, $::fqdn)
+                }
             }
 
             # Configures a host certificate for the sshd on this host
@@ -39,7 +43,8 @@ class ssh::hostkey (
                 order   => 02,
                 content => "
 # host certificate configured via ssh::hostkey
-HostCertificate /etc/ssh/ssh_host_rsa_key-cert"
+HostCertificate /etc/ssh/ssh_host_rsa_key-cert
+"
             }
         }
 
