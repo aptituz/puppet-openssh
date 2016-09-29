@@ -120,9 +120,9 @@ class ssh::server (
         ca_key         => $ca_key,
     } ~>
     class { 'ssh::known_hosts':
-        manage                      => $manage_known_hosts,
-        manage_hostkey              => $manage_hostkey,
-        hostaliases                 => $hostaliases,
-        trusted_cert_authorities    => $trusted_cert_authorities
+        manage                   => $manage_known_hosts,
+        manage_hostkey           => $manage_hostkey,
+        hostaliases              => $hostaliases,
+        trusted_cert_authorities => $trusted_cert_authorities
     }
 }
