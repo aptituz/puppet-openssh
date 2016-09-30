@@ -32,7 +32,7 @@ module Puppet::Parser::Functions
 
     DOC
     ) do |args|
-    raise ArgumentError, ("ssh_sign_certificate(): wrong number of arguments (#{args.length}; must be >= 2)") if args.length < 2
+    raise ArgumentError, ("ssh_sign_certificate(): wrong number of arguments (#{args.length}; must be >= 3)") if args.length < 3
 
     signkey_file    = args[0]
     certificate_id  = args[1]
@@ -61,11 +61,11 @@ module Puppet::Parser::Functions
         end
 
         extra_args = case argspec
-                     when Array
+                     when argspec.kind_of?(Array)
                         argspec[0] << sprintf(argspec[1], values)
-                     when String
+                     when argspec.kind_of?(String)
                         options[name] ? argspec : nil
-                     when Proc
+                     when argspec.kind_of?(Proc)
                         argspec.call(values)
                      end
 
