@@ -1,3 +1,9 @@
+puppet-module-ssh (3.0.0) unstable; urgency=low
+
+  * Add support for ssh certificates
+
+ -- Patrick Schoenfeld <patrick.schoenfeld@credativ.de>  Fri, 30 Sep 2016 14:14:46 +0000
+
 puppet-module-ssh (2.3.1) unstable; urgency=medium
 
   * Support AllowUsers, DenyUsers, AllowGroups, DenyGroups
