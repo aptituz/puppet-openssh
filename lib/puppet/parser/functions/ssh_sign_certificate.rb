@@ -60,14 +60,13 @@ module Puppet::Parser::Functions
             raise ArgumentError, ("ssh_sign_certificate(): unknown option `#{name}'")
         end
 
-        extra_args = case argspec
-                     when argspec.kind_of?(Array)
-                        argspec[0] << sprintf(argspec[1], values)
-                     when argspec.kind_of?(String)
-                        options[name] ? argspec : nil
-                     when argspec.kind_of?(Proc)
-                        argspec.call(values)
-                     end
+        if argspec.kind_of?(Array)
+            extra_args = argspec[0] << sprintf(argspec[1], values)
+        elsif argspec.kind_of?(String)
+            extra_args = options[name] ? argspec : nil
+        elsif argspec.kind_of?(Proc)
+            extra_args = argspec.call(values)
+        end
 
         unless non_keygen_args.include?(name) and not extra_args.nil?
             keygen_extra_args << extra_args
