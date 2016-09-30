@@ -10,7 +10,7 @@ class ssh::params {
     $permit_root_login  = 'no'
     $listen_address     = '0.0.0.0'
     $hostkey_name       = $::fqdn
-    $hostaliases        = undef
+    $hostaliases        = []
     $ca_key             = undef
 
     $options            = {}

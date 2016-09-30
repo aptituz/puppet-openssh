@@ -3,7 +3,7 @@ class ssh::hostkey (
     $manage_hostkey,
     $hostkey_name,
     $ca_key = undef,
-    $hostaliases = undef,
+    $hostaliases = [],
 ) {
 
     if $manage_hostkey {

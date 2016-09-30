@@ -74,6 +74,8 @@ class ssh::server (
         ['yes', 'no', 'without-password', 'forced-commands-only']
     )
 
+    validate_array($hostaliases)
+
     package { 'openssh-server':
         ensure => $ensure,
     }
