@@ -2,6 +2,22 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0]
+### Summary:
+
+
+### Changes:
+* Feature: Introduction of ssh::certificate define and the compagnion
+  parser function ssh_sign_certificate. This allows signing certificates
+  with a pre-generated SSHCA key. It's also possible to pass the path to
+  an ca key to ssh::server which will make the module generate and
+  configure a host certificate for itself.
+
+* The parameter hostaliases now has to be an array. This change is because
+  it actually is a list of values and although it was used solely for
+  a hostkey (were it is needed as a comma-separated string) it is now
+  used for certificates, too, where it has to be an array.
+
 ## [2.4.0]
 ### Summary:
 
