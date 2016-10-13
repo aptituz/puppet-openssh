@@ -20,16 +20,19 @@ class ssh::params {
             $service_name = 'ssh'
             $client_package = 'openssh-client'
             $server_package = 'openssh-server'
+            $sftp_server_path = '/usr/lib/openssh/sftp-server'
         }
         'RedHat': {
             $service_name = 'sshd'
             $client_package = 'openssh-clients'
             $server_package = 'openssh-server'
+            $sftp_server_path = '/usr/libexec/openssh/sftp-server'
         }
         'Suse': {
             $service_name = 'sshd'
             $client_package = 'openssh'
             $server_package = 'openssh'
+            $sftp_server_path = '/usr/lib/ssh/sftp-server'
         }
         default: {
             fail('unsupported platform')
