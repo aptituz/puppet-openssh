@@ -12,7 +12,5 @@ class ssh::client (
   $ensure           = 'present',
   $client_package   = $ssh::params::client_package
   ) inherits ssh::params {
-    package { $client_package:
-        ensure  => $ensure
-    }
+    ensure_packages([$client_package], { 'ensure' => $ensure })
 }

@@ -77,9 +77,7 @@ class ssh::server (
 
     validate_array($hostaliases)
 
-    package { $server_package:
-        ensure => $ensure,
-    }
+    ensure_packages([$server_package], { 'ensure' => $ensure })
 
     if $manage_config {
         file { '/etc/ssh':
