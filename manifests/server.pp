@@ -66,7 +66,7 @@ class ssh::server (
     $permit_root_login          = $ssh::params::permit_root_login,
     $listen_address             = $ssh::params::listen_address,
     $options                    = $ssh::params::options,
-    $ca_key                     = $ssh::params::ssh_key,
+    $ca_key                     = $ssh::params::ca_key,
     $trusted_cert_authorities   = $ssh::params::trusted_cert_authorities,
     ) inherits ssh::params {
 
