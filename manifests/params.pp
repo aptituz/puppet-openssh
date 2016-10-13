@@ -19,10 +19,17 @@ class ssh::params {
         'Debian': {
             $service_name = 'ssh'
             $client_package = 'openssh-client'
+            $server_package = 'openssh-server'
         }
         'RedHat': {
             $service_name = 'sshd'
             $client_package = 'openssh-clients'
+            $server_package = 'openssh-server'
+        }
+        'Suse': {
+            $service_name = 'sshd'
+            $client_package = 'openssh'
+            $server_package = 'openssh'
         }
         default: {
             fail('unsupported platform')

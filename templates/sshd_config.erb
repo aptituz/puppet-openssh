@@ -372,6 +372,8 @@ Banner <%= @options['Banner'] %>
 Subsystem sftp /usr/lib/openssh/sftp-server
 <% elsif @osfamily == 'RedHat' -%>
 Subsystem sftp /usr/libexec/openssh/sftp-server
+<% elsif @osfamily == 'Suse' -%>
+Subsystem sftp /usr/lib/ssh/sftp-server
 <% else -%>
 Subsystem	sftp	/usr/libexec/sftp-server
 <% end -%>

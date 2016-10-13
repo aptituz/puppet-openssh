@@ -62,6 +62,7 @@ class ssh::server (
     $config_template            = $ssh::params::config_template,
     $hostkey_name               = $ssh::params::hostkey_name,
     $hostaliases                = $ssh::params::hostaliases,
+    $server_package             = $ssh::params::server_package,
     $service_name               = $ssh::params::service_name,
     $permit_root_login          = $ssh::params::permit_root_login,
     $listen_address             = $ssh::params::listen_address,
@@ -76,7 +77,7 @@ class ssh::server (
 
     validate_array($hostaliases)
 
-    package { 'openssh-server':
+    package { $server_package:
         ensure => $ensure,
     }
 
@@ -100,7 +101,7 @@ class ssh::server (
             group   => 'root',
             mode    => '0644',
             notify  => Service[$service_name],
-            require => Package['openssh-server'],
+            require => Package[$server_package],
         }
     }
 
@@ -111,7 +112,7 @@ class ssh::server (
         hasstatus  => true,
         require    => [
             Concat['/etc/ssh/sshd_config'],
-            Package['openssh-server']
+            Package[$server_package]
         ],
     }
 
