@@ -21,6 +21,16 @@ describe 'ssh::client' do
             :osfamily   => 'RedHat'
         }}
 
-        it { should contain_package('openssh-clients').with( :ensure => 'present' ) }        
+    	it { should compile.with_all_deps }
+        it { should contain_package('openssh-clients').with( :ensure => 'present' ) }
+    end
+
+    context "Suse specific differences" do
+        let (:facts) {{
+            :osfamily   => 'Suse'
+        }}
+
+    	it { should compile.with_all_deps }
+        it { should contain_package('openssh').with( :ensure => 'present' ) }
     end
 end
