@@ -1,1 +1,1 @@
-class { 'ssh::client': ensure => present }
+class { '::ssh::client': ensure => present }

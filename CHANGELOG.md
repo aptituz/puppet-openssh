@@ -6,7 +6,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Summary:
 
 
-### Changes:
+### Changes
+* sshd_config is now validated with sshd -t before applying it.
+
+* New parameter $additional_known_hosts which allows to specify
+  arbitrary known hosts entries to be included in global known hosts
+  file.
+
+* Obsoletion: The storeconfig class has been removed from this version,
+  since it's way too troublesome in a component module.
+
 * Feature: Introduction of ssh::certificate define and the compagnion
   parser function ssh_sign_certificate. This allows signing certificates
   with a pre-generated SSHCA key. It's also possible to pass the path to

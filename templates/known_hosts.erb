@@ -12,4 +12,12 @@
 <%     end -%>
 <%   end -%>
 <% end -%>
+
+<% if @generated_known_hosts -%>
+# automatically generated known hosts (managed hostkeys)
 <%= @generated_known_hosts %>
+<% end -%>
+# explicitly configured known hosts via ssh::known_hosts::additional_known_hosts
+<% if @additional_known_hosts -%>
+<%= @additional_known_hosts %>
+<% end -%>

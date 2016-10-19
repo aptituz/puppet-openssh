@@ -69,6 +69,7 @@ class ssh::server (
     $options                    = $ssh::params::options,
     $ca_key                     = $ssh::params::ca_key,
     $trusted_cert_authorities   = $ssh::params::trusted_cert_authorities,
+    $additional_known_hosts     = $ssh::params::additional_known_hosts,
     ) inherits ssh::params {
 
     validate_re($permit_root_login,
@@ -95,11 +96,13 @@ class ssh::server (
         }
 
         concat { '/etc/ssh/sshd_config':
-            owner   => 'root',
-            group   => 'root',
-            mode    => '0644',
-            notify  => Service[$service_name],
-            require => Package[$server_package],
+            owner           => 'root',
+            group           => 'root',
+            mode            => '0644',
+            notify          => Service[$service_name],
+            require         => Package[$server_package],
+            validate_cmd    => '/usr/sbin/sshd -t -f %',
+
         }
     }
 
@@ -124,6 +127,7 @@ class ssh::server (
         manage                   => $manage_known_hosts,
         manage_hostkey           => $manage_hostkey,
         hostaliases              => $hostaliases,
-        trusted_cert_authorities => $trusted_cert_authorities
+        trusted_cert_authorities => $trusted_cert_authorities,
+        additional_known_hosts   => $additional_known_hosts,
     }
 }

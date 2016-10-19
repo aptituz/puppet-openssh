@@ -83,5 +83,12 @@ describe 'ssh::server' do
 		let (:params) { { :ensure => 'absent' } }
 		it { should compile.with_all_deps }
 		it { should contain_package('openssh-server').with( :ensure => 'absent' ) }
-	end
+  end
+
+  context "with additional known hosts" do
+    let (:entry)  { 'an additional known hosts entry' }
+    let (:params) { { :additional_known_hosts => entry } }
+
+    it { should contain_file('/etc/ssh/ssh_known_hosts').with_content(/#{entry}/)}
+  end
 end
