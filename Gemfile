@@ -6,21 +6,30 @@ else
   puppetversion = ['~> 3.7.2']
 end
 
+#group :development do
+#  gem 'guard-rake', :require => false
+#end
+
 group :unit_tests, :development do
+  gem 'sshkey'
   gem 'puppet', puppetversion
-  gem 'metadata-json-lint'
-  gem 'rake'
 
-  gem 'puppet-lint', '~> 2.0'
-  gem 'puppet-lint-unquoted_string-check', :require => false
-  gem 'puppet-lint-empty_string-check', :require => false
-  gem 'puppet-lint-leading_zero-check', :require => false
-  gem 'puppet-lint-variable_contains_upcase', :require => false
-
+  gem 'puppetlabs_spec_helper', '~> 1.2.2', :require => false
   gem 'rspec'
   gem 'rspec-puppet'
-  gem 'puppetlabs_spec_helper', '>= 0.1.0'
-  gem 'sshkey'
+  gem 'puppet-blacksmith', :require => false
+
+  gem 'rspec-puppet-facts', :require => false
+  gem 'puppet-lint-absolute_classname-check', :require => false
+  gem 'puppet-lint-leading_zero-check', :require => false
+  gem 'puppet-lint-version_comparison-check', :require => false
+  gem 'puppet-lint-classes_and_types_beginning_with_digits-check', :require => false
+  gem 'puppet-lint-unquoted_string-check', :require => false
+  gem 'puppet-lint-variable_contains_upcase', :require => false
+  gem 'metadata-json-lint', :require => false
+  gem 'puppet-strings', '0.4.0', :require => false
+  gem 'rubocop-rspec', '~> 1.6', :require => false if RUBY_VERSION >= '2.3.0'
+  gem 'json_pure'
 end
 
 group :system_tests do
