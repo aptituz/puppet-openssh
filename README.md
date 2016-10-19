@@ -79,6 +79,18 @@ generate and manage the hostkeys of the system. Then its required to
 mkdir a directory /etc/puppet/ssh on your puppetmaster host and give it
 appropriate permissions so that puppetmaster can create and write files.
 
+If you want to make use of the CA functionalities, you need to create a CA
+signing key and store it as /etc/puppet/id_ca (or another key to your liking).
+You then have to configure that key in the server class to enable the
+CA functionality.
+
+For best use, you should also configure set the $trusted_cert_authorities to all
+certification authorities that shall be configured as trusted (for hostkeys).
+
+If you want to use the functionality for user certificates, take a look at
+the ssh::certificate resource and make sure, you also deploy authorized_keys
+as needed.
+
 ##Usage
 
 You can include the classes you need and configure it via the parameters it
@@ -103,6 +115,12 @@ default and optionally hostkeys.
 The module includes a parser function ssh_keygen which can create and cache
 ssh keys on the server. Its used internally by the module if the module is
 configured to manage the hostkey.
+
+### ssh_sign_certificate
+
+A parser function which allows signing ssh certificates and caching them on
+the puppetmaster. It requires to generate a signing key which needs to stay
+on the puppetmaster and owned by the user running the puppetmaster.
 
 ## Reference
 
