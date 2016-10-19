@@ -16,11 +16,11 @@ class ssh::known_hosts (
       }
 
       file { '/etc/ssh/ssh_known_hosts':
-        ensure        => file,
-        owner         => root,
-        group         => root,
-        mode          => '0644',
-        content       => template('ssh/known_hosts.erb'),
+        ensure  => file,
+        owner   => root,
+        group   => root,
+        mode    => '0644',
+        content => template('ssh/known_hosts.erb'),
       }
     }
 }
