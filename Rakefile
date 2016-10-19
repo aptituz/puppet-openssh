@@ -9,6 +9,11 @@ PuppetLint.configuration.ignore_paths = [
   "vendor/**/*.pp"
 ]
 
+begin
+      require 'puppet_blacksmith/rake_tasks'
+rescue LoadError # rubocop:disable Lint/HandleExceptions
+end
+
 desc "Validate manifests, templates, and ruby files"
 task :validate do
   Dir['manifests/**/*.pp'].each do |manifest|
