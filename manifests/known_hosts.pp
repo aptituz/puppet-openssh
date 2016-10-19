@@ -20,7 +20,7 @@ class ssh::known_hosts (
       } else {
           # storeconfig based implementation is in another class, because
           # otherwise the server is complaining loud if storeconfig is not enabled
-          class { 'ssh::known_hosts::storeconfig':
+          class { '::ssh::known_hosts::storeconfig':
             hostaliases => $hostaliases,
           }
       }

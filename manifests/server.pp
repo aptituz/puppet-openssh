@@ -114,13 +114,13 @@ class ssh::server (
         ],
     }
 
-    class { 'ssh::hostkey':
+    class { '::ssh::hostkey':
         manage_hostkey => $manage_hostkey,
         hostkey_name   => $hostkey_name,
         hostaliases    => $hostaliases,
         ca_key         => $ca_key,
     } ~>
-    class { 'ssh::known_hosts':
+    class { '::ssh::known_hosts':
         manage                   => $manage_known_hosts,
         manage_hostkey           => $manage_hostkey,
         hostaliases              => $hostaliases,
