@@ -7,8 +7,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ### Changes
-* sshd_config is now validated with sshd -t before applying it.
-
 * New parameter $additional_known_hosts which allows to specify
   arbitrary known hosts entries to be included in global known hosts
   file.

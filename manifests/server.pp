@@ -101,8 +101,8 @@ class ssh::server (
             mode            => '0644',
             notify          => Service[$service_name],
             require         => Package[$server_package],
-            validate_cmd    => '/usr/sbin/sshd -t -f %',
-
+            #Disabled until we can upgrade concat to support this
+            #validate_cmd    => '/usr/sbin/sshd -t -f %',
         }
     }
 
