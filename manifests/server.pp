@@ -96,11 +96,11 @@ class ssh::server (
         }
 
         concat { '/etc/ssh/sshd_config':
-            owner           => 'root',
-            group           => 'root',
-            mode            => '0644',
-            notify          => Service[$service_name],
-            require         => Package[$server_package],
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0644',
+            notify  => Service[$service_name],
+            require => Package[$server_package],
             #Disabled until we can upgrade concat to support this
             #validate_cmd    => '/usr/sbin/sshd -t -f %',
         }
