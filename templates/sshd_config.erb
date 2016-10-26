@@ -10,19 +10,19 @@
 # default value.
 
 
-<% if @options['Port'] -%>
-<% if @options['Port'].respond_to?('each') -%>
-<% @options['Port'].each do |port| -%>
+<% if @real_options['Port'] -%>
+<% if @real_options['Port'].respond_to?('each') -%>
+<% @real_options['Port'].each do |port| -%>
 Port <%= port %>
 <% end -%>
 <% else -%>
-Port <%= @options['Port'] %>
+Port <%= @real_options['Port'] %>
 <% end -%>
 <% else -%>
 #Port 22
 <% end -%>
-<% if @options['AddressFamily'] -%>
-AddressFamily <%= @options['AddressFamily'] %>
+<% if @real_options['AddressFamily'] -%>
+AddressFamily <%= @real_options['AddressFamily'] %>
 <% else -%>
 #AddressFamily any
 <% end -%>
@@ -40,15 +40,15 @@ ListenAddress <%= @listen_address %>
 # with openssh-5.4.
 # Defaulting to protocol 2 unless otherwise specified
 # regardless of openssh version.
-Protocol <%= @options['Protocol'] || '2' %>
+Protocol <%= @real_options['Protocol'] || '2' %>
 
-<% if @options['HostKey'] -%>
-<% if @options['HostKey'].respond_to?('each') -%>
-<% @options['HostKey'].each do |hostkey_pathname| -%>
+<% if @real_options['HostKey'] -%>
+<% if @real_options['HostKey'].respond_to?('each') -%>
+<% @real_options['HostKey'].each do |hostkey_pathname| -%>
 HostKey <%= hostkey_pathname %>
 <% end -%>
 <% else -%>
-HostKey <%= @options['HostKey'] %>
+HostKey <%= @real_options['HostKey'] %>
 <% end -%>
 <% else -%>
 # HostKey for protocol version 1
@@ -62,166 +62,166 @@ HostKey <%= @options['HostKey'] %>
 
 # Lifetime and size of ephemeral version 1 server key
 # Unless specified, setting ServerKeyBits to newer default of 1024
-<% if @options['KeyRegenerationInterval'] -%>
-KeyRegenerationInterval <%= @options['KeyRegenerationInterval'] %>
+<% if @real_options['KeyRegenerationInterval'] -%>
+KeyRegenerationInterval <%= @real_options['KeyRegenerationInterval'] %>
 <% else -%>
 #KeyRegenerationInterval 1h
 <% end -%>
-ServerKeyBits <%= @options['ServerKeyBits'] || '1024' %>
+ServerKeyBits <%= @real_options['ServerKeyBits'] || '1024' %>
 
 # Ciphers and keying
 #RekeyLimit default none
 
 # Logging
 # obsoletes QuietMode and FascistLogging
-<% if @options['SyslogFacility'] -%>
-SyslogFacility <%= @options['SyslogFacility'] %>
+<% if @real_options['SyslogFacility'] -%>
+SyslogFacility <%= @real_options['SyslogFacility'] %>
 <% elsif @osfamily == 'RedHat' -%>
-SyslogFacility <%= @options['SyslogFacility'] || 'AUTHPRIV' %>
+SyslogFacility <%= @real_options['SyslogFacility'] || 'AUTHPRIV' %>
 <% else -%>
 #SyslogFacility AUTH
 <% end -%>
-<% if @options['LogLevel'] -%>
-LogLevel <%= @options['LogLevel'] %>
+<% if @real_options['LogLevel'] -%>
+LogLevel <%= @real_options['LogLevel'] %>
 <% else -%>
 #LogLevel INFO
 <% end -%>
 
 # Authentication:
 
-<% if @options['LoginGraceTime'] -%>
-LoginGraceTime <%= @options['LoginGraceTime'] %>
+<% if @real_options['LoginGraceTime'] -%>
+LoginGraceTime <%= @real_options['LoginGraceTime'] %>
 <% else -%>
 #LoginGraceTime 2m
 <% end -%>
 PermitRootLogin <%= @permit_root_login %>
-<% if @options['StrictModes'] -%>
-StrictModes <%= @options['StrictModes'] %>
+<% if @real_options['StrictModes'] -%>
+StrictModes <%= @real_options['StrictModes'] %>
 <% else -%>
 #StrictModes yes
 <% end -%>
-<% if @options['MaxAuthTries'] -%>
-MaxAuthTries <%= @options['MaxAuthTries'] %>
+<% if @real_options['MaxAuthTries'] -%>
+MaxAuthTries <%= @real_options['MaxAuthTries'] %>
 <% else -%>
 #MaxAuthTries 6
 <% end -%>
-<% if @options['MaxSessions'] -%>
-MaxSessions <%= @options['MaxSessions'] %>
+<% if @real_options['MaxSessions'] -%>
+MaxSessions <%= @real_options['MaxSessions'] %>
 <% else -%>
 #MaxSessions 10
 <% end -%>
 
-<% if @options['RSAAuthentication'] -%>
-RSAAuthentication <%= @options['RSAAuthentication'] %>
+<% if @real_options['RSAAuthentication'] -%>
+RSAAuthentication <%= @real_options['RSAAuthentication'] %>
 <% else -%>
 #RSAAuthentication yes
 <% end -%>
-<% if @options['PubkeyAuthentication'] -%>
-PubkeyAuthentication <%= @options['PubkeyAuthentication'] %>
+<% if @real_options['PubkeyAuthentication'] -%>
+PubkeyAuthentication <%= @real_options['PubkeyAuthentication'] %>
 <% else -%>
 #PubkeyAuthentication yes
 <% end -%>
 
-<% if @options['AuthorizedKeysFile'] -%>
-AuthorizedKeysFile <%= @options['AuthorizedKeysFile'] %>
+<% if @real_options['AuthorizedKeysFile'] -%>
+AuthorizedKeysFile <%= @real_options['AuthorizedKeysFile'] %>
 <% else -%>
 # The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
 # but this is overridden so installations will only check .ssh/authorized_keys
 AuthorizedKeysFile	.ssh/authorized_keys
 <% end -%>
 
-<% if @options['AuthorizedPrincipalsFile'] -%>
-AuthorizedPrincipalsFile <%= @options['AuthorizedPrincipalsFile'] %>
+<% if @real_options['AuthorizedPrincipalsFile'] -%>
+AuthorizedPrincipalsFile <%= @real_options['AuthorizedPrincipalsFile'] %>
 <% else -%>
 #AuthorizedPrincipalsFile none
 <% end -%>
 
-<% if @options['AuthorizedKeysCommand'] -%>
-AuthorizedKeysCommand <%= @options['AuthorizedKeysCommand'] %>
+<% if @real_options['AuthorizedKeysCommand'] -%>
+AuthorizedKeysCommand <%= @real_options['AuthorizedKeysCommand'] %>
 <% else -%>
 #AuthorizedKeysCommand none
 <% end -%>
-<% if @options['AuthorizedKeysCommandUser'] -%>
-AuthorizedKeysCommandUser <%= @options['AuthorizedKeysCommandUser'] %>
+<% if @real_options['AuthorizedKeysCommandUser'] -%>
+AuthorizedKeysCommandUser <%= @real_options['AuthorizedKeysCommandUser'] %>
 <% else -%>
 #AuthorizedKeysCommandUser nobody
 <% end -%>
 
 # For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
-<% if @options['RhostsRSAAuthentication'] -%>
-RhostsRSAAuthentication <%= @options['RhostsRSAAuthentication'] %>
+<% if @real_options['RhostsRSAAuthentication'] -%>
+RhostsRSAAuthentication <%= @real_options['RhostsRSAAuthentication'] %>
 <% else -%>
 #RhostsRSAAuthentication no
 <% end -%>
 # similar for protocol version 2
-<% if @options['HostbasedAuthentication'] -%>
-HostbasedAuthentication <%= @options['HostbasedAuthentication'] %>
+<% if @real_options['HostbasedAuthentication'] -%>
+HostbasedAuthentication <%= @real_options['HostbasedAuthentication'] %>
 <% else -%>
 #HostbasedAuthentication no
 <% end -%>
 # Change to yes if you don't trust ~/.ssh/known_hosts for
 # RhostsRSAAuthentication and HostbasedAuthentication
-<% if @options['IgnoreUserKnownHosts'] -%>
-IgnoreUserKnownHosts <%= @options['IgnoreUserKnownHosts'] %>
+<% if @real_options['IgnoreUserKnownHosts'] -%>
+IgnoreUserKnownHosts <%= @real_options['IgnoreUserKnownHosts'] %>
 <% else -%>
 #IgnoreUserKnownHosts no
 <% end -%>
 # Don't read the user's ~/.rhosts and ~/.shosts files
-<% if @options['IgnoreRhosts'] -%>
-IgnoreRhosts <%= @options['IgnoreRhosts'] %>
+<% if @real_options['IgnoreRhosts'] -%>
+IgnoreRhosts <%= @real_options['IgnoreRhosts'] %>
 <% else -%>
 #IgnoreRhosts yes
 <% end -%>
 
 # To disable tunneled clear text passwords, change to no here!
-<% if @options['PasswordAuthentication'] -%>
-PasswordAuthentication <%= @options['PasswordAuthentication'] %>
+<% if @real_options['PasswordAuthentication'] -%>
+PasswordAuthentication <%= @real_options['PasswordAuthentication'] %>
 <% else -%>
 #PasswordAuthentication yes
 <% end -%>
-<% if @options['PermitEmptyPasswords'] -%>
-PermitEmptyPasswords <%= @options['PermitEmptyPasswords'] %>
+<% if @real_options['PermitEmptyPasswords'] -%>
+PermitEmptyPasswords <%= @real_options['PermitEmptyPasswords'] %>
 <% else -%>
 #PermitEmptyPasswords no
 <% end -%>
 
 # Change to no to disable s/key passwords
-<% if @options['ChallengeResponseAuthentication'] -%>
-ChallengeResponseAuthentication <%= @options['ChallengeResponseAuthentication'] %>
+<% if @real_options['ChallengeResponseAuthentication'] -%>
+ChallengeResponseAuthentication <%= @real_options['ChallengeResponseAuthentication'] %>
 <% else -%>
 #ChallengeResponseAuthentication yes
 <% end -%>
 
 # Kerberos options
-<% if @options['KerberosAuthentication'] -%>
-KerberosAuthentication <%= @options['KerberosAuthentication'] %>
+<% if @real_options['KerberosAuthentication'] -%>
+KerberosAuthentication <%= @real_options['KerberosAuthentication'] %>
 <% else -%>
 #KerberosAuthentication no
 <% end -%>
-<% if @options['KerberosOrLocalPasswd'] -%>
-KerberosOrLocalPasswd <%= @options['KerberosOrLocalPasswd'] %>
+<% if @real_options['KerberosOrLocalPasswd'] -%>
+KerberosOrLocalPasswd <%= @real_options['KerberosOrLocalPasswd'] %>
 <% else -%>
 #KerberosOrLocalPasswd yes
 <% end -%>
-<% if @options['KerberosTicketCleanup'] -%>
-KerberosTicketCleanup <%= @options['KerberosTicketCleanup'] %>
+<% if @real_options['KerberosTicketCleanup'] -%>
+KerberosTicketCleanup <%= @real_options['KerberosTicketCleanup'] %>
 <% else -%>
 #KerberosTicketCleanup yes
 <% end -%>
-<% if @options['KerberosGetAFSToken'] -%>
-KerberosGetAFSToken <%= @options['KerberosGetAFSToken'] %>
+<% if @real_options['KerberosGetAFSToken'] -%>
+KerberosGetAFSToken <%= @real_options['KerberosGetAFSToken'] %>
 <% else -%>
 #KerberosGetAFSToken no
 <% end -%>
 
 # GSSAPI options
-<% if @options['GSSAPIAuthentication'] -%>
-GSSAPIAuthentication <%= @options['GSSAPIAuthentication'] %>
+<% if @real_options['GSSAPIAuthentication'] -%>
+GSSAPIAuthentication <%= @real_options['GSSAPIAuthentication'] %>
 <% else -%>
 #GSSAPIAuthentication no
 <% end -%>
-<% if @options['GSSAPICleanupCredentials'] -%>
-GSSAPICleanupCredentials <%= @options['GSSAPICleanupCredentials'] %>
+<% if @real_options['GSSAPICleanupCredentials'] -%>
+GSSAPICleanupCredentials <%= @real_options['GSSAPICleanupCredentials'] %>
 <% else -%>
 #GSSAPICleanupCredentials yes
 <% end -%>
@@ -235,8 +235,8 @@ GSSAPICleanupCredentials <%= @options['GSSAPICleanupCredentials'] %>
 # If you just want the PAM account and session checks to run without
 # PAM authentication, then enable this but set PasswordAuthentication
 # and ChallengeResponseAuthentication to 'no'.
-<% if @options['UsePAM'] -%>
-UsePAM <%= @options['UsePAM'] %>
+<% if @real_options['UsePAM'] -%>
+UsePAM <%= @real_options['UsePAM'] %>
 <% elsif @osfamily == 'Debian' -%>
 UsePAM yes
 <% elsif @osfamily == 'RedHat' -%>
@@ -246,137 +246,137 @@ UsePAM yes
 <% end -%>
 
 
-<% if @options['AllowAgentForwarding'] -%>
-AllowAgentForwarding <%= @options['AllowAgentForwarding'] %>
+<% if @real_options['AllowAgentForwarding'] -%>
+AllowAgentForwarding <%= @real_options['AllowAgentForwarding'] %>
 <% else -%>
 #AllowAgentForwarding yes
 <% end -%>
-<% if @options['AllowTcpForwarding'] -%>
-AllowTcpForwarding <%= @options['AllowTcpForwarding'] %>
+<% if @real_options['AllowTcpForwarding'] -%>
+AllowTcpForwarding <%= @real_options['AllowTcpForwarding'] %>
 <% else -%>
 #AllowTcpForwarding yes
 <% end -%>
-<% if @options['GatewayPorts'] -%>
-GatewayPorts <%= @options['GatewayPorts'] %>
+<% if @real_options['GatewayPorts'] -%>
+GatewayPorts <%= @real_options['GatewayPorts'] %>
 <% else -%>
 #GatewayPorts no
 <% end -%>
-<% if @options['X11Forwarding'] -%>
-X11Forwarding <%= @options['X11Forwarding'] %>
+<% if @real_options['X11Forwarding'] -%>
+X11Forwarding <%= @real_options['X11Forwarding'] %>
 <% elsif @osfamily == 'Debian' || @osfamily == 'RedHat' -%>
 # Debian and RedHat set X11Forwarding to yes.
 X11Forwarding yes
 <% else -%>
 #X11Forwarding no
 <% end -%>
-<% if @options['X11DisplayOffset'] -%>
-X11DisplayOffset <%= @options['X11DisplayOffset'] %>
+<% if @real_options['X11DisplayOffset'] -%>
+X11DisplayOffset <%= @real_options['X11DisplayOffset'] %>
 <% else -%>
 #X11DisplayOffset 10
 <% end -%>
-<% if @options['X11UseLocalhost'] -%>
-X11UseLocalhost <%= @options['X11UseLocalhost'] %>
+<% if @real_options['X11UseLocalhost'] -%>
+X11UseLocalhost <%= @real_options['X11UseLocalhost'] %>
 <% else -%>
 #X11UseLocalhost yes
 <% end -%>
-<% if @options['PermitTTY'] -%>
-PermitTTY <%= @options['PermitTTY'] %>
+<% if @real_options['PermitTTY'] -%>
+PermitTTY <%= @real_options['PermitTTY'] %>
 <% else -%>
 #PermitTTY yes
 <% end -%>
-<% if @options['PrintMotd'] -%>
-PrintMotd <%= @options['PrintMotd'] %>
+<% if @real_options['PrintMotd'] -%>
+PrintMotd <%= @real_options['PrintMotd'] %>
 <% else -%>
 #PrintMotd yes
 <% end -%>
-<% if @options['PrintLastLog'] -%>
-PrintLastLog <%= @options['PrintLastLog'] %>
+<% if @real_options['PrintLastLog'] -%>
+PrintLastLog <%= @real_options['PrintLastLog'] %>
 <% else -%>
 #PrintLastLog yes
 <% end -%>
-<% if @options['TCPKeepAlive'] -%>
-TCPKeepAlive <%= @options['TCPKeepAlive'] %>
+<% if @real_options['TCPKeepAlive'] -%>
+TCPKeepAlive <%= @real_options['TCPKeepAlive'] %>
 <% else -%>
 #TCPKeepAlive yes
 <% end -%>
-<% if @options['UseLogin'] -%>
-UseLogin <%= @options['UseLogin'] %>
+<% if @real_options['UseLogin'] -%>
+UseLogin <%= @real_options['UseLogin'] %>
 <% else -%>
 #UseLogin no
 <% end -%>
-<% if @options['UsePrivilegeSeparation'] -%>
-UsePrivilegeSeparation <%= @options['UsePrivilegeSeparation'] %>
+<% if @real_options['UsePrivilegeSeparation'] -%>
+UsePrivilegeSeparation <%= @real_options['UsePrivilegeSeparation'] %>
 <% else -%>
 # If openssh version is >= 6.1 consider using UsePrivilegeSeparation sandbox
 #UsePrivilegeSeparation yes
 <% end -%>
-<% if @options['PermitUserEnvironment'] -%>
-PermitUserEnvironment <%= @options['PermitUserEnvironment'] %>
+<% if @real_options['PermitUserEnvironment'] -%>
+PermitUserEnvironment <%= @real_options['PermitUserEnvironment'] %>
 <% else -%>
 #PermitUserEnvironment no
 <% end -%>
-<% if @options['Compression'] -%>
-Compression <%= @options['Compression'] %>
+<% if @real_options['Compression'] -%>
+Compression <%= @real_options['Compression'] %>
 <% else -%>
 #Compression delayed
 <% end -%>
-<% if @options['ClientAliveInterval'] -%>
-ClientAliveInterval <%= @options['ClientAliveInterval'] %>
+<% if @real_options['ClientAliveInterval'] -%>
+ClientAliveInterval <%= @real_options['ClientAliveInterval'] %>
 <% else -%>
 #ClientAliveInterval 0
 <% end -%>
-<% if @options['ClientAliveCountMax'] -%>
-ClientAliveCountMax <%= @options['ClientAliveCountMax'] %>
+<% if @real_options['ClientAliveCountMax'] -%>
+ClientAliveCountMax <%= @real_options['ClientAliveCountMax'] %>
 <% else -%>
 #ClientAliveCountMax 3
 <% end -%>
-<% if @options['UseDNS'] -%>
-UseDNS <%= @options['UseDNS'] %>
+<% if @real_options['UseDNS'] -%>
+UseDNS <%= @real_options['UseDNS'] %>
 <% else -%>
 #UseDNS yes
 <% end -%>
-<% if @options['PidFile'] -%>
-PidFile <%= @options['PidFile'] %>
+<% if @real_options['PidFile'] -%>
+PidFile <%= @real_options['PidFile'] %>
 <% else -%>
 #PidFile /var/run/sshd.pid
 <% end -%>
-<% if @options['MaxStartups'] -%>
-MaxStartups <%= @options['MaxStartups'] %>
+<% if @real_options['MaxStartups'] -%>
+MaxStartups <%= @real_options['MaxStartups'] %>
 <% else -%>
 #MaxStartups 10:30:100
 <% end -%>
-<% if @options['PermitTunnel'] -%>
-PermitTunnel <%= @options['PermitTunnel'] %>
+<% if @real_options['PermitTunnel'] -%>
+PermitTunnel <%= @real_options['PermitTunnel'] %>
 <% else -%>
 #PermitTunnel no
 <% end -%>
-<% if @options['ChrootDirectory'] -%>
-ChrootDirectory <%= @options['ChrootDirectory'] %>
+<% if @real_options['ChrootDirectory'] -%>
+ChrootDirectory <%= @real_options['ChrootDirectory'] %>
 <% else -%>
 #ChrootDirectory none
 <% end -%>
-<% if @options['VersionAddendum'] -%>
-VersionAddendum <%= @options['VersionAddendum'] %>
+<% if @real_options['VersionAddendum'] -%>
+VersionAddendum <%= @real_options['VersionAddendum'] %>
 <% else -%>
 #VersionAddendum none
 <% end -%>
 
 # no default banner path
-<% if @options['Banner'] -%>
-Banner <%= @options['Banner'] %>
+<% if @real_options['Banner'] -%>
+Banner <%= @real_options['Banner'] %>
 <% else -%>
 #Banner none
 <% end -%>
 
 Subsystem sftp <%= @sftp_server_path %>
 
-<% if @options['AcceptEnv'] -%>
-<% if @options['AcceptEnv'].respond_to?('each') -%>
-<% @options['AcceptEnv'].each do |env| -%>
+<% if @real_options['AcceptEnv'] -%>
+<% if @real_options['AcceptEnv'].respond_to?('each') -%>
+<% @real_options['AcceptEnv'].each do |env| -%>
 AcceptEnv <%= env %>
 <% end -%>
 <% else -%>
-AcceptEnv <%= @options['AcceptEnv'] %>
+AcceptEnv <%= @real_options['AcceptEnv'] %>
 <% end -%>
 <% else -%>
 <% if @osfamily == 'Debian' -%>
@@ -388,19 +388,19 @@ AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
 AcceptEnv XMODIFIERS
 <% end -%>
 
-<% if @options['DenyUsers'] -%>
-DenyUsers <%= @options['DenyUsers'] %>
+<% if @real_options['DenyUsers'] -%>
+DenyUsers <%= @real_options['DenyUsers'] %>
 <% end -%>
-<% if @options['AllowUsers'] -%>
-AllowUsers <%= @options['AllowUsers'] %>
+<% if @real_options['AllowUsers'] -%>
+AllowUsers <%= @real_options['AllowUsers'] %>
 <% end -%>
-<% if @options['DenyGroups'] -%>
-DenyGroups <%= @options['DenyGroups'] %>
+<% if @real_options['DenyGroups'] -%>
+DenyGroups <%= @real_options['DenyGroups'] %>
 <% end -%>
-<% if @options['AllowGroups'] -%>
-AllowGroups <%= @options['AllowGroups'] %>
+<% if @real_options['AllowGroups'] -%>
+AllowGroups <%= @real_options['AllowGroups'] %>
 <% end -%>
 <% end -%>
-<% if @options['Ciphers'] -%>
- Ciphers <%= @options['Ciphers'] -%>
+<% if @real_options['Ciphers'] -%>
+ Ciphers <%= @real_options['Ciphers'] -%>
 <% end -%>
