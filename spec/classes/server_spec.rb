@@ -22,6 +22,7 @@ describe 'ssh::server' do
            )}
 
         it { should contain_concat__fragment('sshd_config_base').with_content(/\nSubsystem sftp \/usr\/lib\/openssh\/sftp-server\n/) }
+        it { should contain_concat__fragment('sshd_config_base').with_content(/\nPrintMotd no\n/) }
     end
 
 
@@ -46,6 +47,11 @@ describe 'ssh::server' do
 
     end
 
+    context "when overriding PrintMotd option" do
+        let (:params) {{ options: { 'PrintMotd' => 'yes' }}}
+        it { should contain_concat__fragment('sshd_config_base').with_content(/\nPrintMotd yes\n/) }
+    end
+
     context "RedHat-specific differences" do
         let (:facts) {{
             :osfamily   => 'RedHat'
@@ -59,6 +65,7 @@ describe 'ssh::server' do
             )}
 
         it { should contain_concat__fragment('sshd_config_base').with_content(/\nSubsystem sftp \/usr\/libexec\/openssh\/sftp-server\n/) }
+        it { should contain_concat__fragment('sshd_config_base').without_content(/\nPrintMotd no\n/) }
     end
 
     context "Suse-specific differences" do
@@ -76,6 +83,7 @@ describe 'ssh::server' do
             )}
 
         it { should contain_concat__fragment('sshd_config_base').with_content(/\nSubsystem sftp \/usr\/lib\/ssh\/sftp-server\n/) }
+        it { should contain_concat__fragment('sshd_config_base').without_content(/\nPrintMotd no\n/) }
     end
 
 

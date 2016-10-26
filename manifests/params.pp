@@ -23,7 +23,11 @@ class ssh::params {
             $client_package = 'openssh-client'
             $server_package = 'openssh-server'
             $sftp_server_path = '/usr/lib/openssh/sftp-server'
-            $default_options = {}
+
+            # Debian uses PAM to print the MOTD. This has to be disabled so it is not printed twice.
+            $default_options = {
+                'PrintMotd' => 'no',
+            }
         }
         'RedHat': {
             $service_name = 'sshd'
