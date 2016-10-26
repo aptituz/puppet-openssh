@@ -79,6 +79,8 @@ class ssh::server (
 
     ensure_packages([$server_package], { 'ensure' => $ensure })
 
+    $real_options = merge($ssh::params::default_options, $options)
+
     if $manage_config {
         file { '/etc/ssh':
             ensure => directory,
