@@ -59,7 +59,7 @@ HostCertificate /etc/ssh/ssh_host_rsa_key-cert
             owner   => 'root',
             group   => 'root',
             mode    => '0644',
-            content => "ssh-rsa ${rsa_pub} host_rsa_${::hostname}\n",
+            content => $rsa_pub,
         }
 
         # generate and store key on master
@@ -91,7 +91,7 @@ HostCertificate /etc/ssh/ssh_host_rsa_key-cert
             owner   => 'root',
             group   => 'root',
             mode    => '0644',
-            content => "ssh-dsa ${dsa_pub} host_dsa_${::hostname}\n",
+            content => $dsa_pub,
         }
 
         # generate and store key on master
@@ -123,7 +123,7 @@ HostCertificate /etc/ssh/ssh_host_rsa_key-cert
             owner   => 'root',
             group   => 'root',
             mode    => '0644',
-            content => "ssh-ecdsa ${ecdsa_pub} host_ecdsa_${::hostname}\n",
+            content => $ecdsa_pub,
         }
 
 
