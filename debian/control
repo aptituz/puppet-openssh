@@ -1,11 +1,12 @@
-Source: puppet-module-ssh
+Source: puppet-module-aptituz-ssh
 Section: admin
 Priority: optional
 Maintainer: Patrick Schoenfeld <patrick.schoenfeld@credativ.de>
 Build-Depends: debhelper (>= 7)
 Standards-Version: 3.9.5
 
-Package: puppet-module-ssh
+Package: puppet-module-aptituz-ssh
 Architecture: all
+Conflicts: puppet-module-ssh
 Depends: ${misc:Depends}
 Description: puppet module ssh

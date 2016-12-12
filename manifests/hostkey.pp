@@ -43,7 +43,7 @@ class ssh::hostkey (
                 order   => '02',
                 content => "
 # host certificate configured via ssh::hostkey
-HostCertificate /etc/ssh/ssh_host_rsa_key-cert
+HostCertificate /etc/ssh/ssh_host_rsa_key-cert.pub
 "
             }
         }
