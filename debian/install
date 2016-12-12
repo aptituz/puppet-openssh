@@ -3,4 +3,3 @@ templates   usr/share/puppet/modules.available/ssh
 lib         usr/share/puppet/modules.available/ssh
 LICENSE     usr/share/doc/puppet-module-ssh
 README*     usr/share/doc/puppet-module-ssh
-
