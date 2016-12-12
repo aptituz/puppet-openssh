@@ -1,8 +1,14 @@
-puppet-module-aptituz-ssh (3.0.0) unstable; urgency=low
+puppet-module-aptituz-ssh (3.0.0) unstable; urgency=medium
 
+  [ Damian Lukowski ]
+  * There are no examples (yet), remove it from debian/install
+  * Refer to the HostCertificate file that actually exists on the system.
+
+  [ Patrick Schoenfeld ]
+  * Remove examples from debian/install
   * Add support for ssh certificates
 
- -- Patrick Schoenfeld <patrick.schoenfeld@credativ.de>  Fri, 30 Sep 2016 14:14:46 +0000
+ -- Patrick Schönfeld <patrick.schoenfeld@credativ.de>  Mon, 12 Dec 2016 11:55:02 +0100
 
 puppet-module-ssh (2.3.1) unstable; urgency=medium
 
