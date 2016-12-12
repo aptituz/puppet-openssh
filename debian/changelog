@@ -1,4 +1,4 @@
-puppet-module-ssh (3.0.0) unstable; urgency=low
+puppet-module-aptituz-ssh (3.0.0) unstable; urgency=low
 
   * Add support for ssh certificates
 
