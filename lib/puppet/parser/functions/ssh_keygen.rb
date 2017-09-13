@@ -179,7 +179,7 @@ module Puppet::Parser::Functions
 
     config = {
       'request'                 => nil,
-      'basedir'                 => '/etc/puppet',
+      'basedir'                 => Puppet[:vardir],
       'dir'                     => 'ssh',
 
       'type'                    => 'rsa',
