@@ -124,8 +124,8 @@ class ssh::server (
         hostkey_name   => $hostkey_name,
         hostaliases    => $hostaliases,
         ca_key         => $ca_key,
-    } ~>
-    class { '::ssh::known_hosts':
+    }
+    ~> class { '::ssh::known_hosts':
         manage                   => $manage_known_hosts,
         manage_hostkey           => $manage_hostkey,
         hostaliases              => $hostaliases,
